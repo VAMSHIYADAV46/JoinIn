@@ -1,18 +1,14 @@
-import { Router } from "express";
-import { login,register } from "../controllers/user.controller.js";
+import express from 'express';
+import { login, register, addToActivity, getUserActivity } from '../controllers/user.controller.js';
 
+const router = express.Router();
 
+// Existing routes
+router.post('/login', login);
+router.post('/register', register);
 
-const router = Router();
-
-
-router.route("/login").post(login)
-router.route("/register").post(register)
-router.route("/add_to_activity")
-router.route("/get_all_activity")
+// ADD THESE NEW ROUTES
+router.post('/add_to_activity', addToActivity);
+router.get('/get_all_activity', getUserActivity);
 
 export default router;
-
-
-
-

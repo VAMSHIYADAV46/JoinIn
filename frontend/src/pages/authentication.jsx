@@ -15,56 +15,47 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { AuthContext } from '../contexts/AuthContext';
 import { Snackbar } from '@mui/material';
 
-
-
-// TODO remove, this demo shouldn't need to reset the theme.
-
 const defaultTheme = createTheme();
 
 export default function Authentication() {
-
-    
-
-    const [username, setUsername] = React.useState();
-    const [password, setPassword] = React.useState();
-    const [name, setName] = React.useState();
-    const [error, setError] = React.useState();
-    const [message, setMessage] = React.useState();
-
+    // Initialize all state variables with empty strings to prevent controlled/uncontrolled warning
+    const [username, setUsername] = React.useState('');
+    const [password, setPassword] = React.useState('');
+    const [name, setName] = React.useState('');
+    const [error, setError] = React.useState('');
+    const [message, setMessage] = React.useState('');
 
     const [formState, setFormState] = React.useState(0);
-
-    const [open, setOpen] = React.useState(false)
-
+    const [open, setOpen] = React.useState(false);
 
     const { handleRegister, handleLogin } = React.useContext(AuthContext);
 
-    let handleAuth = async () => {
+    const handleAuth = async () => {
         try {
             if (formState === 0) {
-
-                let result = await handleLogin(username, password)
-
-
+                let result = await handleLogin(username, password);
             }
             if (formState === 1) {
                 let result = await handleRegister(name, username, password);
                 console.log(result);
-                setUsername("");
+                setUsername('');
+                setName('');
+                setPassword('');
                 setMessage(result);
                 setOpen(true);
-                setError("")
-                setFormState(0)
-                setPassword("")
+                setError('');
+                setFormState(0);
             }
         } catch (err) {
-
             console.log(err);
             let message = (err.response.data.message);
             setError(message);
         }
-    }
+    };
 
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     return (
         <ThemeProvider theme={defaultTheme}>
@@ -98,28 +89,35 @@ export default function Authentication() {
                             <LockOutlinedIcon />
                         </Avatar>
 
-
                         <div>
-                            <Button variant={formState === 0 ? "contained" : ""} onClick={() => { setFormState(0) }}>
+                            <Button 
+                                variant={formState === 0 ? "contained" : "outlined"} 
+                                onClick={() => { setFormState(0) }}
+                            >
                                 Sign In
                             </Button>
-                            <Button variant={formState === 1 ? "contained" : ""} onClick={() => { setFormState(1) }}>
+                            <Button 
+                                variant={formState === 1 ? "contained" : "outlined"} 
+                                onClick={() => { setFormState(1) }}
+                            >
                                 Sign Up
                             </Button>
                         </div>
 
                         <Box component="form" noValidate sx={{ mt: 1 }}>
-                            {formState === 1 ? <TextField
-                                margin="normal"
-                                required
-                                fullWidth
-                                id="username"
-                                label="Full Name"
-                                name="username"
-                                value={name}
-                                autoFocus
-                                onChange={(e) => setName(e.target.value)}
-                            /> : <></>}
+                            {formState === 1 && (
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    fullWidth
+                                    id="name"
+                                    label="Full Name"
+                                    name="name"
+                                    value={name}
+                                    autoFocus
+                                    onChange={(e) => setName(e.target.value)}
+                                />
+                            )}
 
                             <TextField
                                 margin="normal"
@@ -129,10 +127,10 @@ export default function Authentication() {
                                 label="Username"
                                 name="username"
                                 value={username}
-                                autoFocus
+                                autoFocus={formState === 0}
                                 onChange={(e) => setUsername(e.target.value)}
-
                             />
+                            
                             <TextField
                                 margin="normal"
                                 required
@@ -142,11 +140,10 @@ export default function Authentication() {
                                 value={password}
                                 type="password"
                                 onChange={(e) => setPassword(e.target.value)}
-
                                 id="password"
                             />
 
-                            <p style={{ color: "red" }}>{error}</p>
+                            {error && <p style={{ color: "red" }}>{error}</p>}
 
                             <Button
                                 type="button"
@@ -155,21 +152,19 @@ export default function Authentication() {
                                 sx={{ mt: 3, mb: 2 }}
                                 onClick={handleAuth}
                             >
-                                {formState === 0 ? "Login " : "Register"}
+                                {formState === 0 ? "Login" : "Register"}
                             </Button>
-
                         </Box>
                     </Box>
                 </Grid>
             </Grid>
 
             <Snackbar
-
                 open={open}
                 autoHideDuration={4000}
+                onClose={handleClose}
                 message={message}
             />
-
         </ThemeProvider>
     );
 }

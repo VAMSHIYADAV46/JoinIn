@@ -25,8 +25,8 @@ app.use("/api/v1/users", userRoutes);
 
 const start = async () => {
 
-  const DB_URL = `mongodb+srv://vamshi:${process.env.DB_PASS}@cluster0.zcqaull.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
-  // const DB_URL = `mongodb+srv://vamshi:${process.env.DB_PASS}@joinin.frwsy4q.mongodb.net/?retryWrites=true&w=majority&appName=JoinIn`
+  // const DB_URL = `mongodb+srv://vamshi:${process.env.DB_PASS}@cluster0.zcqaull.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`
+  const DB_URL = `mongodb+srv://JoinIn:${process.env.DB_PASS}@joinin.nf6mqgz.mongodb.net/?retryWrites=true&w=majority&appName=JoinIn`
   
 
 

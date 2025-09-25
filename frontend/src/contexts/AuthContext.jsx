@@ -4,22 +4,15 @@ import { createContext, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import server from "../environment";
 
-
 export const AuthContext = createContext({});
 
 const client = axios.create({
     baseURL: `${server}/api/v1/users`
 })
 
-
 export const AuthProvider = ({ children }) => {
-
     const authContext = useContext(AuthContext);
-
-
     const [userData, setUserData] = useState(authContext);
-
-
     const router = useNavigate();
 
     const handleRegister = async (name, username, password) => {
@@ -29,7 +22,6 @@ export const AuthProvider = ({ children }) => {
                 username: username,
                 password: password
             })
-
 
             if (request.status === httpStatus.CREATED) {
                 return request.data.message;
@@ -66,27 +58,37 @@ export const AuthProvider = ({ children }) => {
                 }
             });
             return request.data
-        } catch
-         (err) {
+        } catch (err) {
             throw err;
         }
     }
 
     const addToUserHistory = async (meetingCode) => {
         try {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                throw new Error("No authentication token found");
+            }
+
             let request = await client.post("/add_to_activity", {
-                token: localStorage.getItem("token"),
+                token: token,
                 meeting_code: meetingCode
             });
-            return request
-        } catch (e) {
-            throw e;
+            
+            return request.data;
+        } catch (error) {
+            console.error('Error adding to user history:', error);
+            throw error;
         }
     }
 
-
     const data = {
-        userData, setUserData, addToUserHistory, getHistoryOfUser, handleRegister, handleLogin
+        userData, 
+        setUserData, 
+        addToUserHistory, 
+        getHistoryOfUser, 
+        handleRegister, 
+        handleLogin
     }
 
     return (
@@ -94,5 +96,4 @@ export const AuthProvider = ({ children }) => {
             {children}
         </AuthContext.Provider>
     )
-
 }
