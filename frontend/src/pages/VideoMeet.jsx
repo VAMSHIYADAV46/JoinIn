@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import io from "socket.io-client";
 import server from '../environment';
+import { useNavigate } from 'react-router-dom';
 
 const server_url = server;
 
@@ -13,6 +14,7 @@ const peerConfigConnections = {
 }
 
 export default function VideoMeetComponent() {
+    const navigate = useNavigate();
     var socketRef = useRef();
     let socketIdRef = useRef();
     let localVideoref = useRef();
@@ -353,7 +355,7 @@ export default function VideoMeetComponent() {
             let tracks = localVideoref.current.srcObject.getTracks()
             tracks.forEach(track => track.stop())
         } catch (e) { }
-        window.location.href = "/home"
+        navigate("/home")
     }
 
     let openChat = () => {
