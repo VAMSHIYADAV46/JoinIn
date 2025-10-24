@@ -22,7 +22,7 @@
 [![WebRTC](https://img.shields.io/badge/WebRTC-333333?style=for-the-badge&logo=webrtc&logoColor=white)](https://webrtc.org/)
 [![Socket.IO](https://img.shields.io/badge/Socket.IO-4.x-010101?style=for-the-badge&logo=socket.io&logoColor=white)](https://socket.io/)
 
-[**🚀 Live Demo**](https://joinin.demo.com) • [**📖 Documentation**](https://github.com/VAMSHIYADAV46/JoinIn/wiki) • [**🐛 Report Bug**](https://github.com/VAMSHIYADAV46/JoinIn/issues) • [**✨ Request Feature**](https://github.com/VAMSHIYADAV46/JoinIn/issues)
+[**🚀 Live Demo**](https://joinin-m13s.onrender.com) • [**📖 Documentation**](https://github.com/VAMSHIYADAV46/JoinIn/wiki) • [**🐛 Report Bug**](https://github.com/VAMSHIYADAV46/JoinIn/issues) • [**✨ Request Feature**](https://github.com/VAMSHIYADAV46/JoinIn/issues)
 
 </div>
 
